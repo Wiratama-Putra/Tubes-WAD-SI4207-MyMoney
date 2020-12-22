@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{url('vendor/css/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{url('tampilan/css/bootstrap.css')}}">
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -16,8 +16,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="{{url('vendor/css/style.css')}}">
-    <title>Hello, world!</title>
+    <link rel="stylesheet" href="{{url('tampilan/css/style.css')}}">
+    <title>{{ config('app.name', 'EAD') }} | @yield('title')</title>
 </head>
 
 <body>
@@ -25,7 +25,7 @@
     <nav class="navbar navbar-expand-lg navbar-light ">
         <div class="container">
             <a class="navbar-brand" href="{{url('/')}}">
-                <img src="{{url('vendor/img/logo.svg')}}" width="160" class="d-inline-block align-top" alt="" loading="lazy">
+                <img src="{{url('tampilan/img/logo.svg')}}" width="160" class="d-inline-block align-top" alt="" loading="lazy">
 
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
