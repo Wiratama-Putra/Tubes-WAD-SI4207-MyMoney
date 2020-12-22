@@ -33,7 +33,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-3">
-                        <img src="{{url('vendor/img/user.jpg')}}" class="img-fluid rounded" alt="">
+                        <img src="{{url('tampilan/img/user.jpg')}}" class="img-fluid rounded" alt="">
                     </div>
                     <div class="col-9 d-flex align-items-center">
                         <div>
