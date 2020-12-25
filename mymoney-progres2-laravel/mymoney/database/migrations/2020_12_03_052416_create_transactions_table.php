@@ -14,10 +14,11 @@ class CreateTransactionsTable extends Migration
     public function up()
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('deskripsi');
             $table->integer('nominal');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
