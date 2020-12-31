@@ -35,15 +35,16 @@ Route::middleware('auth','is_user')->prefix('dashboard')->name('dashboard.')->gr
     Route::get('/listrik', [DashboardController::class, 'listrik'])->name('shop.listrik');
     Route::post('/listrik', [DashboardController::class, 'listrikStore'])->name('shop.listrik');
     Route::get('/catatan', [DashboardController::class, 'catatan'])->name('catatan.list');
-    Route::get('/tambah-catatan', [DashboardController::class, 'tambah'])->name('catatan.add');
-    Route::post('/tambah-catatan', [DashboardController::class, 'tambahNote'])->name('catatan.add');
-    Route::get('/catatan/{note}', [DashboardController::class, 'catatanEdit'])->name('catatan.edit');
-    Route::post('/catatan/{note}', [DashboardController::class, 'updateNote'])->name('catatan.edit');
-    Route::post('/catatan/finish/{note}', [DashboardController::class, 'finishedNote'])->name('catatan.fnish');
+    Route::get('/tambah-catatan', [DashboardController::class, 'tambahCtt'])->name('catatan.add');
+    Route::post('/tambah-catatan', [DashboardController::class, 'insertCtt'])->name('catatan.add');
+    Route::get('/catatan/{note}', [DashboardController::class, 'editCtt'])->name('catatan.edit');
+    Route::post('/catatan/{note}', [DashboardController::class, 'updateCtt'])->name('catatan.edit');
+    Route::post('/catatan/finish/{note}', [DashboardController::class, 'finishedCtt'])->name('catatan.fnish');
+    Route::get('/catatan/del/{note}', [DashboardController::class, 'delCtt'])->name('catatan.del');
     
 
 
-    Route::get('/test', [DashboardController::class, 'test']);
+    // Route::get('/test', [DashboardController::class, 'test']);
     Route::get('/tabungan', [DashboardController::class, 'tabungan'])->name('tabungan.index');
     Route::get('/voucher', [DashboardController::class, 'voucher'])->name('shop.voucher');
     Route::get('/myvoucher', [DashboardController::class, 'test'])->name('myvoucher');

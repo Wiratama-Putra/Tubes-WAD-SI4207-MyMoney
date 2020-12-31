@@ -36,10 +36,10 @@
                     <div class="form-group">
                         <div class="form-group">
                             <label for="forRek">Nomor Rekening</label>
-                            <input name="rekening" type="number" class="form-control" id="forRek">
+                            <input name="rekening" type="number" class="form-control" id="forRek" required>
                         </div>
                         <label for="forBank">Bank</label>
-                        <select name="bank" class="form-control" id="forBank" name="bank">
+                        <select name="bank" class="form-control" id="forBank" name="bank" required>
                             <option>BCA</option>
                             <option>BNI</option>
                             <option>BRI</option>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="form-group">
                         <label for="forNominal">Nominal</label>
-                        <input name="nominal" type="number" class="form-control" id="forNominal">
+                        <input name="nominal" type="number" class="form-control" id="forNominal" required>
                     </div>
                     @if(Auth::user()->saving_before_trans)
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
@@ -75,7 +75,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1">Rp. </span>
                                     </div>
-                                    <input type="number" id="saving" class="form-control" name="saving" placeholder="Jumlah tabungan">
+                                    <input type="number" id="saving" class="form-control" name="saving" placeholder="Jumlah tabungan" required>
                                 </div>
                             </div>
                             <div class="modal-footer">

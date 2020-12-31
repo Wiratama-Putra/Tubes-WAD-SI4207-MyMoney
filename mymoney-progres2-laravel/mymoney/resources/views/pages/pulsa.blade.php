@@ -46,10 +46,10 @@
                     <div class="form-group">
                         <div class="form-group">
                             <label for="noHp">Nomor Telepon</label>
-                            <input type="number" class="form-control" id="noHp" name="nomorhp">
+                            <input type="number" class="form-control" id="noHp" name="nomorhp" required>
                         </div>
                         <label for="forProvider">Provider</label>
-                        <select class="form-control" id="forProvider" name="provider">
+                        <select class="form-control" id="forProvider" name="provider" required>
                             <option value="tlk">Telkomsel</option>
                             <option value="idst">Indosat</option>
                             <option value="xl">XL</option>
@@ -60,7 +60,7 @@
                     </div>
                     <div class="form-group">
                         <label for="forJml">Jumlah <i>(5000 / 10000 / 20000 / etc)</i></label>
-                        <input type="number" class="form-control" id="forJml" name="nominal">
+                        <input type="number" class="form-control" id="forJml" name="nominal" required>
                     </div>
                     @if(Auth::user()->saving_before_trans)
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
@@ -88,7 +88,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1">Rp. </span>
                                     </div>
-                                    <input type="number" id="saving" class="form-control" name="saving" placeholder="Jumlah tabungan">
+                                    <input type="number" id="saving" class="form-control" name="saving" placeholder="Jumlah tabungan" required>
                                 </div>
                             </div>
                             <div class="modal-footer">

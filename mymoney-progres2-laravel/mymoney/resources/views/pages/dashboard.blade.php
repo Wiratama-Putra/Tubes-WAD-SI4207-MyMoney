@@ -176,6 +176,7 @@
                             <th scope="col">No</th>
                             <th scope="col">Judul</th>
                             <th scope="col">Catatan</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -184,6 +185,12 @@
                             <th scope="row">{{$loop->iteration}}</th>
                             <td>{{$c->judul}}</td>
                             <td>{{$c->catatan}}</td>
+                            <td>
+                                <form action="{{url('/dashboard/catatan/finish',$c->id)}}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check-circle"></i></button>
+                                </form>
+                            </td>
                         </tr>
                         @empty
                         <tr>

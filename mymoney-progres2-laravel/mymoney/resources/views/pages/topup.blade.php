@@ -18,7 +18,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="forBank">Bank - Rekening</label>
-                        <select class="form-control" name="bank" id="forBank">
+                        <select class="form-control" name="bank" id="forBank" required>
                             <option>BCA - 0028 87277</option>
                             <option>BNI - 288298 92</option>
                             <option>BRI - 22 2989 99</option>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group">
                         <label for="forNominal">Nominal</label>
-                        <input name="nominal" type="number" class="form-control" id="forNominal">
+                        <input name="nominal" type="number" class="form-control" id="forNominal" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Topup</button>
                 </form>

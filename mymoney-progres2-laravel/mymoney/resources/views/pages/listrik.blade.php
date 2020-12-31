@@ -47,12 +47,12 @@
                     <div class="form-group">
                         <div class="form-group">
                             <label for="forMeter">No. Meter/ID Pelanggan</label>
-                            <input type="text" class="form-control" id="forMeter" name="meter">
+                            <input type="text" class="form-control" id="forMeter" name="meter" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="forJml">Jumlah<i>(20000 / 25000 / 50000 / etc)</i></label>
-                        <input type="number" class="form-control" id="forJml" name="nominal">
+                        <input type="number" class="form-control" id="forJml" name="nominal" required>
                     </div>
                     @if(Auth::user()->saving_before_trans)
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
@@ -80,7 +80,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1">Rp. </span>
                                     </div>
-                                    <input type="number" id="saving" class="form-control" name="saving" placeholder="Jumlah tabungan">
+                                    <input type="number" id="saving" class="form-control" name="saving" placeholder="Jumlah tabungan" required>
                                 </div>
                             </div>
                             <div class="modal-footer">

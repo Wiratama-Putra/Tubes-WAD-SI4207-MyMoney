@@ -247,12 +247,59 @@ class DashboardController extends Controller
         return view('pages.success', compact(['judulTrans','pesan']));
     }
 
-    public function test(){
-        $judulTrans = "Token Listrik";
-        
-        $pesan = "$nmrToken";
-        return view('pages.success', compact(['judulTrans','pesan']));
+    public function catatan()
+    {
+        return view('pages.catatan', [
+            'catatan' => Note::where('user_id', Auth::user()->id)->get(),
+            ]);
     }
+
+    public function tambahCtt()
+    {
+        return view('pages.catatanCreate');
+    }
+
+    public function editCtt(Note $note)
+    {
+        return view('pages.catatanEdit', compact('note'));
+    }
+
+    public function insertCtt(Request $request)
+    {
+        Note::create([
+            'user_id' => Auth::user()->id,
+            'judul' => $request->judul,
+            'catatan' => $request->catatan,
+        ]);
+        return redirect('/dashboard/catatan');
+    }
+
+    public function updateCtt(Request $request)
+    {
+        Note::findOrFail($request->id)->update($request->all());
+        return redirect('/dashboard/catatan');
+    }
+
+    public function finishedCtt(Note $note)
+    {
+        Note::where('id', $note->id)->update([
+            'is_finished' => 1
+        ]);
+        return back();
+    }
+
+    public function delCtt(Note $note)
+    {
+        Note::where('id', $note->id)->delete();
+        return back();
+    }
+
+    // public function test(){
+    //     $judulTrans = "Token Listrik";
+        
+    //     $pesan = "$nmrToken";
+    //     return view('pages.success', compact(['judulTrans','pesan']));
+    // }
     public function tabungan()
     {
         return view('pages.tabungan', [
@@ -263,46 +310,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function catatan()
-    {
-        return view('pages.catatan', [
-            'catatan' => Note::where('user_id', Auth::user()->id)->get(),
-            ]);
-    }
-
-    public function tambah()
-    {
-        return view('pages.catatanCreate');
-    }
-
-    public function catatanEdit(Note $note)
-    {
-        return view('pages.catatanEdit', compact('note'));
-    }
-
-    public function tambahNote(Request $request)
-    {
-        Note::create([
-            'user_id' => Auth::user()->id,
-            'judul' => $request->judul,
-            'catatan' => $request->catatan,
-        ]);
-        return redirect('/dashboard/catatan');
-    }
-
-    public function updateNote(Request $request)
-    {
-        Note::findOrFail($request->id)->update($request->all());
-        return redirect('/dashboard/catatan');
-    }
-
-    public function finishedNote(Note $note)
-    {
-        Note::where('id', $note->id)->update([
-            'is_finished' => 1
-        ]);
-        return redirect('/dashboard/catatan');
-    }
     // belum fiks
     public function voucher()
     {

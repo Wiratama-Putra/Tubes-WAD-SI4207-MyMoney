@@ -1,7 +1,11 @@
 @extends('layouts.template')
 @section('title', 'Edit Catatan')
 @section('content')
-<a class="btn btn-primary mx-2 my-2" href="{{url('/tambah-catatan')}}">Tambah Catatan</a>
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Tambah Catatan</h1>
+</div>
+
 <div class="card border-left-warning shadow h-100 py-2">
     <div class="card-body">
         <form action="{{url('/dashboard/catatan',$note->id)}}" method="post">
@@ -15,7 +19,7 @@
                 <label for="exampleFormControlTextarea1">Catatan</label>
                 <textarea name="catatan" class="form-control" id="exampleFormControlTextarea1" rows="3">{{$note->catatan}}</textarea>
             </div>
-            <button type="submit" class="btn btn-success">Tambah Catatan</button>
+            <button type="submit" class="btn btn-success">Update Catatan</button>
         </form>
     </div>
 </div>
