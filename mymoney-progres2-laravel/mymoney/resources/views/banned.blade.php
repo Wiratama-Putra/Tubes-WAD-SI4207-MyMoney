@@ -2,9 +2,9 @@
 @section('title', 'Account Banned')
 @section('content')
 
-<div class="row">
+<div class="row d-flex justify-content-center">
     <div class="col-lg-6 mb-4">
-        <div class="card shadow mb-4">
+        <div class="card shadow mb-4 ">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Banned</h6>
             </div>
