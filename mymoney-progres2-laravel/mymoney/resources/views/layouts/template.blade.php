@@ -33,14 +33,22 @@
         </a>
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
+        @if(Auth::user()->level === "user")
         <li class="nav-item {{ Nav::isRoute('dashboard.index') }}">
             <a class="nav-link" href="{{ route('dashboard.index') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard
-                    @if(Auth::user()->level === "admin") <sup>Admin</sup>
-                    @endif
-                </span></a>
+                <span>Dashboard</span>
+            </a>
         </li>
+        @endif
+        @if(Auth::user()->level === "admin")
+        <li class="nav-item {{ Nav::isRoute('admin.index') }}">
+            <a class="nav-link" href="{{ route('admin.index') }}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard <sup>Admin</sup> </span>
+            </a>
+        </li>
+        @endif
         @if(Auth::user()->level === "user")
         <!-- Divider -->
         <hr class="sidebar-divider">

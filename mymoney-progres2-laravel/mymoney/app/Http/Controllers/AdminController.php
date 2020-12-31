@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Voucher;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use File;
 
 class AdminController extends Controller
 {
@@ -43,23 +44,45 @@ class AdminController extends Controller
 
     public function insertVchr(Request $request)
     {
+        $nmgambar = time().str_replace(' ', '', $request->gambar->getClientOriginalName());
         Voucher::create([
             'name' => $request->name,
             'point' => $request->point,
+            'image' => $nmgambar,
         ]);
-        return redirect('/admin/voucher');
+        $request->gambar->move(public_path().'/img', $nmgambar);
+        return redirect('/admin/voucher')->with('pesan', 'Berhasil menambahkan voucher');
     }
 
     public function updateVchr(Request $request)
     {
-        Voucher::findOrFail($request->id)->update($request->all());
-        return redirect('/admin/voucher');
+        $oldimage = (Voucher::findOrFail($request->id)->only('image'))['image'];
+        if ($request->gambar === null) {
+            $nmgambar = $oldimage;
+        } else {
+            $nmgambar = time().str_replace(' ', '', $request->gambar->getClientOriginalName());
+            $request->gambar->move(public_path().'/img', $nmgambar);        
+            $image_path = public_path().'/img/'.$oldimage;
+            if(file_exists($image_path)) {
+                File::delete($image_path);
+            }
+        }
+        Voucher::findOrFail($request->id)->update([
+            'name' => $request->name,
+            'point' => $request->point,
+            'image' => $nmgambar,
+        ]);
+        return redirect('/admin/voucher')->with('pesan', 'Berhasil mengubah voucher');
     }
 
     public function delVchr(Voucher $voucher)
     {
         Voucher::where('id', $voucher->id)->delete();
-        return back();
+        $image_path = public_path().'/img/'.$voucher->image;
+            if(file_exists($image_path)) {
+                File::delete($image_path);
+            }
+        return back()->with('pesan', 'Voucher Dihapus');
     }
 
     public function users()
