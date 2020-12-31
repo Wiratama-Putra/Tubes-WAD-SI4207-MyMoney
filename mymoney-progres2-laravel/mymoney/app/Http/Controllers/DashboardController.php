@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\belanjaRequest;
+use App\Models\MyVoucher;
 use App\Models\Note;
 use App\Models\Transaction;
 use App\Models\User;
@@ -292,6 +293,15 @@ class DashboardController extends Controller
     {
         Note::where('id', $note->id)->delete();
         return back();
+    }
+
+    public function myvoucher()
+    {
+        return view('pages.myvoucher', [
+            'myvoucher' => MyVoucher::where('user_id', Auth::user()->id)
+                    ->orderBy('created_at', 'desc')
+                    ->get(),
+        ]);
     }
 
     // public function test(){

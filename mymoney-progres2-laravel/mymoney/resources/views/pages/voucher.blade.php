@@ -6,6 +6,7 @@
     <!-- Area Chart -->
     <div class="col-xl-8 col-lg-7">
         <div class="d-flex flex-wrap">
+            
             <div class="card mx-1 my-1" style="width: 18rem;">
                 <img src="{{url('/img/chatime.png')}}" class="card-img-top" alt="...">
                 <div class="card-body">

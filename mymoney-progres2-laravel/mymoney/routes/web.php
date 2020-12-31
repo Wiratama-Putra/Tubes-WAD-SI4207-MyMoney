@@ -41,17 +41,26 @@ Route::middleware('auth','is_user')->prefix('dashboard')->name('dashboard.')->gr
     Route::post('/catatan/{note}', [DashboardController::class, 'updateCtt'])->name('catatan.edit');
     Route::post('/catatan/finish/{note}', [DashboardController::class, 'finishedCtt'])->name('catatan.fnish');
     Route::get('/catatan/del/{note}', [DashboardController::class, 'delCtt'])->name('catatan.del');
+    Route::get('/myvoucher', [DashboardController::class, 'myvoucher'])->name('myvoucher');
     
 
 
     // Route::get('/test', [DashboardController::class, 'test']);
     Route::get('/tabungan', [DashboardController::class, 'tabungan'])->name('tabungan.index');
     Route::get('/voucher', [DashboardController::class, 'voucher'])->name('shop.voucher');
-    Route::get('/myvoucher', [DashboardController::class, 'test'])->name('myvoucher');
+    
 });
 
 Route::middleware('auth','is_admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::get('/voucher', [AdminController::class, 'voucher'])->name('voucher.list');
+    Route::get('/tambah-voucher', [AdminController::class, 'tambahVchr'])->name('voucher.add');
+    Route::post('/tambah-voucher', [AdminController::class, 'insertVchr'])->name('voucher.add');
+    Route::get('/voucher/{voucher}', [AdminController::class, 'editVchr'])->name('voucher.edit');
+    Route::post('/voucher/{voucher}', [AdminController::class, 'updateVchr'])->name('voucher.edit');
+    Route::post('/voucher/finish/{voucher}', [AdminController::class, 'finishedVchr'])->name('voucher.fnish');
+    Route::get('/voucher/del/{voucher}', [AdminController::class, 'delVchr'])->name('voucher.del');
+
 });
 
 Route::get('/myaccount', [ProfileController::class, 'user'])->name('myaccount');

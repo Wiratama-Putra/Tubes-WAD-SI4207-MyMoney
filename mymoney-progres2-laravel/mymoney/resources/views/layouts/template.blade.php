@@ -106,8 +106,8 @@
             </a>
         </li>
         --}}
-        <li class="nav-item {{ Nav::isRoute('dashboard.myvoucher') }}">
-            <a class="nav-link" href="{{ route('dashboard.myvoucher') }}">
+        <li class="nav-item {{ Nav::isRoute('admin.voucher.*') }}">
+            <a class="nav-link" href="{{ route('admin.voucher.list') }}">
                 <i class="fas fa-ticket-alt"></i>
                 <span>Data Voucher</span>
             </a>
