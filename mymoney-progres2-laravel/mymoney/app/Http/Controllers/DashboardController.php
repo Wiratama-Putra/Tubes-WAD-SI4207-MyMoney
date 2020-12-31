@@ -7,6 +7,7 @@ use App\Models\MyVoucher;
 use App\Models\Note;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -304,6 +305,57 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function voucher()
+    {
+        return view('pages.voucher', [
+            'vouchers' => Voucher::orderBy('point', 'asc')->get(),
+        ]);
+    }
+
+    public function buyVoucher(Voucher $voucher)
+    {
+        if ( Auth::user()->point  <  $voucher->point ) {
+            return back()->with('pesan','Point anda masih kurang');
+            exit;
+        }
+
+        Transaction::create([
+            'deskripsi' => 'Pulsa-' . $request->provider . '-' . $request->nomorhp,
+            'nominal' => (int)$request->nominal,
+            'inout' => 'out',
+            'point'=> '+ '.$this->point,
+            'user_id' => Auth::user()->id,
+        ]);
+
+        if (Auth::user()->saving_before_trans) {
+            User::where('id', Auth::user()->id)->update([
+                'balance' => Auth::user()->balance - (int)$request->nominal - (int)$request->saving,
+                'point' => Auth::user()->point + $this->point,
+                'spending' => Auth::user()->spending + (int)$request->nominal,
+                'saving_balance' => Auth::user()->saving_balance + (int)$request->saving
+            ]);
+            Transaction::create([
+                'deskripsi' => 'Nabung',
+                'nominal' => (int)$request->saving,
+                'inout' => 'in',
+                'point'=> '0',
+                'user_id' => Auth::user()->id,
+            ]);
+        } else {
+            User::where('id', Auth::user()->id)->update([
+                'balance' => Auth::user()->balance - (int)$request->nominal,
+                'point' => Auth::user()->point + $this->point,
+                'spending' => Auth::user()->spending + (int)$request->nominal
+            ]);
+        }
+        $judulTrans = "Pulsa";
+        $pesan = "Pembelian Pulsa 
+                $request->provider - $request->nomorhp 
+                Sebesar Rp. ".number_format($request->nominal, 0, ',', '.').
+                " Telah berhasil. \nSaldo Total anda Rp. ".number_format(Auth::user()->balance, 0, ',', '.');
+        return view('pages.success', compact(['judulTrans','pesan']));
+    }
+
     // public function test(){
     //     $judulTrans = "Token Listrik";
         
@@ -321,12 +373,7 @@ class DashboardController extends Controller
     }
 
     // belum fiks
-    public function voucher()
-    {
-        return view('pages.voucher', [
-            'user' => Auth::user()
-        ]);
-    }
+    
 
     public function belanjaApi(belanjaRequest $request)
     {
