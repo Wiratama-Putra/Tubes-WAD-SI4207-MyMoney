@@ -74,14 +74,14 @@
  
         <!-- Divider -->
         <hr class="sidebar-divider">
-        <li class="nav-item {{ Nav::isRoute('dashboard.tabungan') }}">
-            <a class="nav-link" href="{{ route('dashboard.tabungan') }}">
+        <li class="nav-item {{ Nav::isRoute('dashboard.tabungan.*') }}">
+            <a class="nav-link" href="{{ route('dashboard.tabungan.index') }}">
                 <i class="fas fa-coins"></i>	
                 <span>Tabungan</span>
             </a>
         </li>
         <li class="nav-item {{ Nav::isRoute('dashboard.catatan.*') }}">
-            <a class="nav-link" href="{{ route('dashboard.catatan') }}">
+            <a class="nav-link" href="{{ route('dashboard.catatan.list') }}">
                 <i class="fas fa-sticky-note"></i>
                 <span>Catatan</span>
             </a>
@@ -98,12 +98,14 @@
         <div class="sidebar-heading">
             {{ __('Manajemen data') }}
         </div>
+        {{--! 
         <li class="nav-item {{ Nav::isRoute('dashboard.catatan.*') }}">
             <a class="nav-link" href="{{ route('dashboard.catatan') }}">
                 <i class="fas fa-users-cog"></i>
                 <span>Data Pengguna</span>
             </a>
         </li>
+        --}}
         <li class="nav-item {{ Nav::isRoute('dashboard.myvoucher') }}">
             <a class="nav-link" href="{{ route('dashboard.myvoucher') }}">
                 <i class="fas fa-ticket-alt"></i>

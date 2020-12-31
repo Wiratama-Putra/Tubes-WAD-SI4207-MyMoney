@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('deskripsi');
             $table->integer('nominal');
+            $table->string('point');
             $table->string('inout');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

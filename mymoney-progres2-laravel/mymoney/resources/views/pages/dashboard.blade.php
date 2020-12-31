@@ -19,7 +19,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Saldo</div>
+                            Saldo Aktif</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800"> @currency(Auth::user()->balance) </div>
                     </div>
                     <div class="col-auto">
@@ -54,7 +54,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                             Jumlah Poin</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$user->point}}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ Auth::user()->point }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-gem fa-2x text-gray-300"></i>
@@ -96,6 +96,7 @@
                             <tr>
                                 <th>Judul Transaksi</th>
                                 <th>Nominal</th>
+                                <th>Point</th>
                                 <th>Tanggal</th>
                             </tr>
                         </thead>
@@ -104,6 +105,7 @@
                             <tr>
                                 <td>{{$t->deskripsi}}</td>
                                 <td> @currency($t->nominal)</td>
+                                <td> {{$t->point}}</td>
                                 <td>{{$t->created_at}}</td>
                             </tr>
                             @empty
@@ -149,12 +151,11 @@
     <div class="col-lg-6 mb-4">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Ilustrasi</h6>
             </div>
             <div class="card-body">
                 <div class="text-center">
-                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                        src="{{ asset('img/svg/undraw_online_payments_luau.svg') }}" alt="">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="{{ asset('img/svg/undraw_online_payments_luau.svg') }}" alt="">
                 </div>
                 <p>Kalau ada yang praktis, kenapa harus ribet ? <br>
                     Belanja Kapanpun dimanapun.

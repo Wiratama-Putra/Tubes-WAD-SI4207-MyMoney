@@ -1,7 +1,7 @@
 @extends('layouts.template')
 @section('title', 'Catatan')
 @section('content')
-<a class="btn btn-primary mx-2 my-2" href="{{url('/dashboard/tambah-catatan')}}">Tambah Catatan</a>
+<a class="btn btn-primary mx-2 my-2" href="{{ route('dashboard.catatan.add') }}">Tambah Catatan</a>
 <div class="card border-left-warning shadow h-100 py-2">
     <div class="card-body">
         <table class="table">

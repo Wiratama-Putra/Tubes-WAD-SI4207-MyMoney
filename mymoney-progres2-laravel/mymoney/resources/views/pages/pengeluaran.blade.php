@@ -1,10 +1,10 @@
 @extends('layouts.template')
-@section('title', 'Riwayat')
+@section('title', 'Pengeluaran')
 @section('content')
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Riwayat Transaksi Anda</h1>
+    <h1 class="h3 mb-0 text-gray-800">Pengeluaran Anda</h1>
 </div>
 
 <div class="row">
@@ -13,7 +13,7 @@
         <div class="card shadow">
     
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Riwayat</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Pengeluaran</h6>
             </div>
             
             <div class="card-body">
@@ -23,7 +23,6 @@
                             <tr>
                                 <th>Judul Transaksi</th>
                                 <th>Nominal</th>
-                                <th>Point</th>
                                 <th>Tanggal</th>
                             </tr>
                         </thead>
@@ -31,8 +30,7 @@
                             @forelse($transaction as $t)
                             <tr>
                                 <td>{{$t->deskripsi}}</td>
-                                <td> @currency($t->nominal)</td>
-                                <td>{{$t->point}}</td>
+                                <td>{{$t->nominal}}</td>
                                 <td>{{$t->created_at}}</td>
                             </tr>
                             @empty

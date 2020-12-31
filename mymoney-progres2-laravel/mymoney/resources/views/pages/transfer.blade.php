@@ -35,19 +35,19 @@
                     @csrf
                     <div class="form-group">
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Nomor Rekening</label>
-                            <input name="rekening" type="text" class="form-control" id="exampleInputPassword1">
+                            <label for="forRek">Nomor Rekening</label>
+                            <input name="rekening" type="number" class="form-control" id="forRek">
                         </div>
-                        <label for="exampleFormControlSelect1">Bank</label>
-                        <select name="bank" class="form-control" id="exampleFormControlSelect1">
+                        <label for="forBank">Bank</label>
+                        <select name="bank" class="form-control" id="forBank" name="bank">
                             <option>BCA</option>
                             <option>BNI</option>
                             <option>BRI</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Nominal</label>
-                        <input name="nominal" type="text" class="form-control" id="exampleInputPassword1">
+                        <label for="forNominal">Nominal</label>
+                        <input name="nominal" type="number" class="form-control" id="forNominal">
                     </div>
                     @if(Auth::user()->saving_before_trans)
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
@@ -66,7 +66,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="text-center">
-                                    <i class="small text-warning">Anda mengaktifkan fitur menabung untuk melanjutkan transaksi. <br> Jika ingin menonaktifkan, sikahkan pergi ke pengaturan akun.</i>
+                                    <i class="small text-warning">Anda mengaktifkan fitur menabung untuk melanjutkan transaksi. <br> Jika ingin menonaktifkan, sikahkan pergi ke pengaturan akun "Akun Saya".</i>
                                     <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 15rem;" src="{{ asset('img/svg/undraw_Savings_re_eq4w.svg') }}" alt="">
                                 </div>
                                 <hr>
