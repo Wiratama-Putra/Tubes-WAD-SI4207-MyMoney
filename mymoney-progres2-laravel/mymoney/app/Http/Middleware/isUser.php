@@ -16,8 +16,10 @@ class isUser
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->level === "user")
+        if(auth()->user()->level === "user" && !auth()->user()->is_active)
         {
+            return redirect('/banned');
+        } else if(auth()->user()->level === "user" && auth()->user()->is_active){
             return $next($request);
         }
         return redirect('/admin');

@@ -98,14 +98,14 @@
         <div class="sidebar-heading">
             {{ __('Manajemen data') }}
         </div>
-        {{--! 
-        <li class="nav-item {{ Nav::isRoute('dashboard.catatan.*') }}">
-            <a class="nav-link" href="{{ route('dashboard.catatan') }}">
+        
+        <li class="nav-item {{ Nav::isRoute('admin.users.*') }}">
+            <a class="nav-link" href="{{ route('admin.users.list') }}">
                 <i class="fas fa-users-cog"></i>
                 <span>Data Pengguna</span>
             </a>
         </li>
-        --}}
+       
         <li class="nav-item {{ Nav::isRoute('admin.voucher.*') }}">
             <a class="nav-link" href="{{ route('admin.voucher.list') }}">
                 <i class="fas fa-ticket-alt"></i>

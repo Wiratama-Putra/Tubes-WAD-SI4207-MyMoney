@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BannedController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,8 +61,12 @@ Route::middleware('auth','is_admin')->prefix('admin')->name('admin.')->group(fun
     Route::post('/voucher/{voucher}', [AdminController::class, 'updateVchr'])->name('voucher.edit');
     Route::post('/voucher/finish/{voucher}', [AdminController::class, 'finishedVchr'])->name('voucher.fnish');
     Route::get('/voucher/del/{voucher}', [AdminController::class, 'delVchr'])->name('voucher.del');
+    Route::get('/users', [AdminController::class, 'users'])->name('users.list');
+    Route::get('/users/pswd/{user}', [AdminController::class, 'resetPswdUser'])->name('users.reset');
+    Route::get('/users/status/{user}', [AdminController::class, 'statusChngUser'])->name('users.stat');
 
 });
 
 Route::get('/myaccount', [ProfileController::class, 'user'])->name('myaccount');
 Route::put('/myaccount', [ProfileController::class, 'update'])->name('myaccount.update');
+Route::get('/banned', [BannedController::class, 'index'])->name('banned');

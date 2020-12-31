@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Voucher;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -59,5 +60,28 @@ class AdminController extends Controller
     {
         Voucher::where('id', $voucher->id)->delete();
         return back();
+    }
+
+    public function users()
+    {
+        return view('admin.users', [
+            'users' => User::where('level', 'user')->get(),
+        ]);
+    }
+
+    public function resetPswdUser(User $user)
+    {
+        User::where('id', $user->id)->update([
+            'password' => Hash::make("12345678")
+        ]);
+        return back()->with('pesan', 'Password Berhasil direset ke 12345678');;
+    }
+
+    public function statusChngUser(User $user)
+    {
+        User::where('id', $user->id)->update([
+            'is_active' => !$user->is_active
+        ]);
+        return back()->with('pesan', 'Status akun berhasil diubah');
     }
 }
