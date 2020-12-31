@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,19 +18,24 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
-});
-Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/topup', [DashboardController::class, 'topup'])->name('topup');
+})->name('index');
+
+Auth::routes();
+
+Route::middleware('auth','is_user')->prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
+    Route::get('/topup', [DashboardController::class, 'topup'])->name('saldo.topup');
     Route::post('/topup', [DashboardController::class, 'topupStore']);
-    Route::get('/transfer', [DashboardController::class, 'transfer'])->name('transfer');
+    Route::get('/transfer', [DashboardController::class, 'transfer'])->name('saldo.transfer');
     Route::post('/transfer', [DashboardController::class, 'transferStore']);
-    Route::get('/riwayat', [DashboardController::class, 'riwayat'])->name('riwayat');
-    Route::get('/pulsa', [DashboardController::class, 'pulsa'])->name('pulsa');
-    Route::get('/listrik', [DashboardController::class, 'listrik'])->name('listrik');
-    Route::get('/user', [DashboardController::class, 'user'])->name('user');
-    Route::get('/voucher', [DashboardController::class, 'voucher'])->name('voucher');
+    Route::get('/riwayat', [DashboardController::class, 'riwayat'])->name('saldo.riwayat');
+    Route::get('/pengeluaran', [DashboardController::class, 'riwayat'])->name('saldo.pengeluaran');
+    Route::get('/pulsa', [DashboardController::class, 'pulsa'])->name('shop.pulsa');
+    Route::get('/listrik', [DashboardController::class, 'listrik'])->name('shop.listrik');
+    Route::get('/voucher', [DashboardController::class, 'voucher'])->name('shop.voucher');
     Route::get('/catatan', [DashboardController::class, 'catatan'])->name('catatan');
+    Route::get('/tabungan', [DashboardController::class, 'catatan'])->name('tabungan');
+    Route::get('/myvoucher', [DashboardController::class, 'catatan'])->name('myvoucher');
     Route::get('/catatan/{note}', [DashboardController::class, 'catatanEdit']);
     Route::post('/catatan/{note}', [DashboardController::class, 'updatePost']);
     Route::post('/catatan/finish/{note}', [DashboardController::class, 'finishedPost']);
@@ -36,6 +43,9 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     Route::post('/tambah-catatan', [DashboardController::class, 'tambahPost']);
 });
 
-Auth::routes();
+Route::middleware('auth','is_admin')->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+});
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/myaccount', [ProfileController::class, 'user'])->name('myaccount');
+Route::put('/myaccount', [ProfileController::class, 'update'])->name('myaccount.update');

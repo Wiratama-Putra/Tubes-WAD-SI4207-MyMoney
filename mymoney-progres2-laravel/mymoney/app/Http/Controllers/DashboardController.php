@@ -12,67 +12,104 @@ use Illuminate\Support\Facades\Redis;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','is_user']);
+    }
+
     public function index()
     {
-
         return view('pages.dashboard', [
             'user' => Auth::user(),
-            'transaction' => Transaction::all(),
-            'catatan' => Note::where('is_finished', 0)->get()
+            'transaction' => Transaction::where('user_id', Auth::user()->id)
+                    ->orderBy('created_at', 'desc')
+                    ->limit(7)
+                    ->get(),
+            'catatan' => Note::where('user_id', Auth::user()->id)
+                    ->where('is_finished', 0)
+                    ->get(),
         ]);
     }
+
     public function topup()
     {
         return view('pages.topup');
     }
+
     public function topupStore(Request $request)
     {
-        $balance = (User::findOrFail(Auth::user()->id)->only('balance'))['balance']; 
-        $point = (User::findOrFail(Auth::user()->id)->only('point'))['point'];
-
-        User::where('id', Auth::user()->id)->update([
-            'balance' => $balance + (int)$request->nominal,
-            'point' => $point + 10
-        ]);
+        User::where('id', Auth::user()->id)
+            ->update([
+                'balance' => Auth::user()->balance + (int)$request->nominal,
+                'point' => Auth::user()->point + 10
+            ]);
         Transaction::create([
-            'deskripsi' => 'topup',
+            'deskripsi' => 'Topup',
             'nominal' => (int)$request->nominal,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            'inout' => 'in'
         ]);
         return redirect('dashboard')->with('status', 'Top Up berhasil');
     }
+
     public function transfer()
     {
         return view('pages.transfer');
     }
+
     public function transferStore(Request $request)
     {
-
-        $balance = (User::findOrFail(Auth::user()->id)->only('balance'))['balance'];
-        $point = (User::findOrFail(Auth::user()->id)->only('point'))['point'];
         $request->validate([
-            'nominal' => 'integer|max:' . $balance
+            'nominal' => 'integer|max:' . Auth::user()->balance
         ]);
+        
+        if ( Auth::user()->spending_target  <  (Auth::user()->spending + (int)$request->nominal)) {
+            return redirect()
+                ->route('dashboard.saldo.transfer')
+                ->with('message','Gagal!! Anda melebihi batas target pengeluaran. Silahkan atur target pengeluaran anda di Menu "Akun Saya"');
+            exit;
+        }
 
-
-        User::where('id', Auth::user()->id)->update([
-            'balance' => $balance - (int)$request->nominal,
-            'point' => $point + 10
-        ]);
         Transaction::create([
             'deskripsi' => 'Transfer-' . $request->bank . '-' . $request->rekening,
             'nominal' => (int)$request->nominal,
+            'inout' => 'out',
             'user_id' => Auth::user()->id
         ]);
-        return redirect('dashboard')->with('status', 'Transfer berhasil');
+
+        if (Auth::user()->saving_before_trans) {
+            User::where('id', Auth::user()->id)->update([
+                'balance' => Auth::user()->balance - (int)$request->nominal - (int)$request->saving,
+                'point' => Auth::user()->point + 10,
+                'spending' => Auth::user()->spending + (int)$request->nominal,
+                'saving_balance' => Auth::user()->saving_balance + (int)$request->saving
+            ]);
+            Transaction::create([
+                'deskripsi' => 'Nabung',
+                'nominal' => (int)$request->saving,
+                'inout' => 'in',
+                'user_id' => Auth::user()->id
+            ]);
+        } else {
+            User::where('id', Auth::user()->id)->update([
+                'balance' => Auth::user()->balance - (int)$request->nominal,
+                'point' => Auth::user()->point + 10,
+                'spending' => Auth::user()->spending + (int)$request->nominal
+            ]);
+        }
+        return redirect('dashboard')
+            ->with('status', 'Transfer berhasil');
     }
     public function riwayat()
     {
         return view('pages.riwayat', [
             'user' => Auth::user(),
-            'transaction' => Transaction::all()
+            'transaction' => Transaction::where('user_id', Auth::user()->id)
+                    ->orderBy('created_at', 'desc')
+                    ->get(),
         ]);
     }
+
     // Catatan
     public function catatan()
     {
@@ -122,19 +159,11 @@ class DashboardController extends Controller
             'user' => Auth::user()
         ]);
     }
-    public function user()
-    {
-        return view('pages.user', [
-            'user' => Auth::user()
-        ]);
-    }
 
     public function belanjaApi(belanjaRequest $request)
     {
         $balance = (User::findOrFail($request->id)->only('balance'))['balance'];
         $point = (User::findOrFail($request->id)->only('point'))['point'];
-
-
 
         User::where('id', $request->id)->update([
             'balance' => $balance - (int)$request->nominal,

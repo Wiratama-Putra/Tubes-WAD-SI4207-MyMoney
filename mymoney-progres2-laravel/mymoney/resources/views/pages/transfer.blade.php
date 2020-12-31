@@ -1,7 +1,7 @@
-@extends('template.template')
-
-
+@extends('layouts.template')
+@section('title', 'Transfer')
 @section('content')
+
 <div class="row">
     <div class="col-12">
         @error('nominal')
@@ -9,83 +9,120 @@
         @enderror
     </div>
 </div>
-<!-- Page Heading -->
+
+@if ($message = Session::get('message'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ $message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+@endif
+
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Transfer</h1>
-
 </div>
 
-<!-- Content Row -->
 <div class="row">
 
-
-
-
-
-    <!-- Pending Requests Card Example -->
-    <!-- <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Detail Transfer</h6>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{url('/dashboard/transfer')}}" id="form-id">
+                    @csrf
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Nomor Rekening</label>
+                            <input name="rekening" type="text" class="form-control" id="exampleInputPassword1">
+                        </div>
+                        <label for="exampleFormControlSelect1">Bank</label>
+                        <select name="bank" class="form-control" id="exampleFormControlSelect1">
+                            <option>BCA</option>
+                            <option>BNI</option>
+                            <option>BRI</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Nominal</label>
+                        <input name="nominal" type="text" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    @if(Auth::user()->saving_before_trans)
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+                        Transfer
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Yuk Nabung</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center">
+                                    <i class="small text-warning">Anda mengaktifkan fitur menabung untuk melanjutkan transaksi. <br> Jika ingin menonaktifkan, sikahkan pergi ke pengaturan akun.</i>
+                                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 15rem;" src="{{ asset('img/svg/undraw_Savings_re_eq4w.svg') }}" alt="">
+                                </div>
+                                <hr>
+                                <label class="form-control-label" for="saving">Jumlah Menabung<span class="small text-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">Rp. </span>
                                     </div>
+                                    <input type="number" id="saving" class="form-control" name="saving" placeholder="Jumlah tabungan">
                                 </div>
                             </div>
-                        </div> -->
-</div>
-
-<!-- Content Row -->
-
-<div class="row">
-
-    <!-- Area Chart -->
-    <div class="col-xl-8 col-lg-7">
-        <div class="card shadow mb-4">
-            <!-- Card Header - Dropdown -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Detail Transfer</h6>
-
-            </div>
-            <!-- Card Body -->
-            <div class="card-body">
-                <div class="" style="overflow: hidden;">
-                    <form method="POST" action="{{url('/dashboard/transfer')}}">
-                        @csrf
-                        <div class="form-group">
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Nomor Rekening</label>
-                                <input name="rekening" type="text" class="form-control" id="exampleInputPassword1">
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Proses</button>
                             </div>
-                            <label for="exampleFormControlSelect1">Bank</label>
-                            <select name="bank" class="form-control" id="exampleFormControlSelect1">
-                                <option>BCA</option>
-                                <option>BNI</option>
-                                <option>BRI</option>
-
-                            </select>
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Nominal</label>
-                            <input name="nominal" type="text" class="form-control" id="exampleInputPassword1">
-
                         </div>
-
-                        <button type="submit" class="btn btn-primary">Transfer</button>
-                    </form>
-                </div>
+                    </div>
+                    @else 
+                    <button type="submit" class="btn btn-primary">Transfer</button>
+                    @endif
+                </form>
             </div>
         </div>
     </div>
 
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Ilustrasi</h6>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 20rem;" src="{{ asset('img/svg/undraw_transfer_money_rywa.svg') }}" alt="">
+                </div>
+                <p>Transfer bank bebas biaya admin loh. Yuk saling berbagi</p>
+            </div>
+        </div>
+    </div>
 
 </div>
+@endsection
 
+@section('for-script')
+<script>  
+    $(window).ready(function() { 
+    $("#form-id").on("keypress", function (event) { 
+        console.log("aaya"); 
+        var keyPressed = event.keyCode || event.which; 
+        if (keyPressed === 13) { 
+            // alert("You pressed the Enter key!!"); 
+            event.preventDefault(); 
+            return false; 
+        } 
+    }); 
+    }); 
 
+</script>  
 @endsection

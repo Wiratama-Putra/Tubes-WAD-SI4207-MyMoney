@@ -1,6 +1,5 @@
-@extends('template.template')
-
-
+@extends('layouts.template')
+@section('title', 'Edit Catatan')
 @section('content')
 <a class="btn btn-primary mx-2 my-2" href="{{url('/tambah-catatan')}}">Tambah Catatan</a>
 <div class="card border-left-warning shadow h-100 py-2">

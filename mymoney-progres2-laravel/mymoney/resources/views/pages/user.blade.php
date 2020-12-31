@@ -1,5 +1,5 @@
-@extends('template.template')
-
+@extends('layouts.template')
+@section('title', 'User')
 @section('content')
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">

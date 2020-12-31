@@ -1,6 +1,5 @@
-@extends('template.template')
-
-
+@extends('layouts.template')
+@section('title', 'Pulsa')
 @section('content')
 
 <!-- Page Heading -->
