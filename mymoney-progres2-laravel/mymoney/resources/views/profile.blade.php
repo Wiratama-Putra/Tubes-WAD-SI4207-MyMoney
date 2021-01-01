@@ -56,7 +56,7 @@
 
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('myaccount.update') }}" autocomplete="off">
+                    <form method="POST" action="{{ route('myaccount') }}" autocomplete="off">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <input type="hidden" name="_method" value="PUT">

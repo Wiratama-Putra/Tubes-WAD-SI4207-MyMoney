@@ -30,10 +30,12 @@
                                 <td>
                                     <div class="d-flex">
                                         <a href="{{url('/dashboard/catatan',$c->id)}}" title="Edit" class="mx-1 btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                        @if(!$c->is_finished)
                                         <form action="{{url('/dashboard/catatan/finish',$c->id)}}" method="post">
                                             @csrf
                                             <button type="submit" title="Finish" class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>
                                         </form>
+                                        @endif
                                         <a href="{{url('/dashboard/catatan/del',$c->id)}}" title="Delete" class="mx-1 btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
                                     </div>
                                 </td>

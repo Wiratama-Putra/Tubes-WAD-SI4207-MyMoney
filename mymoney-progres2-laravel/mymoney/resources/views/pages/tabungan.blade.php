@@ -147,7 +147,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Rp. </span>
                         </div>
-                        <input type="number" id="saving" class="form-control" name="nominal" placeholder="Jumlah penarikan" required>
+                        <input type="number" id="saving" class="form-control" name="nominal"  required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -177,7 +177,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Rp. </span>
                         </div>
-                        <input type="number" id="saving" class="form-control" name="nominal" placeholder="Jumlah nabung" required>
+                        <input type="number" id="saving" class="form-control" name="nominal"  required>
                     </div>
                 </div>
                 <div class="modal-footer">

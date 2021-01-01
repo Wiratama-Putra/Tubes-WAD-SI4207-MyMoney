@@ -65,5 +65,5 @@ Route::middleware('auth','is_admin')->prefix('admin')->name('admin.')->group(fun
 });
 
 Route::get('/myaccount', [ProfileController::class, 'user'])->name('myaccount');
-Route::put('/myaccount', [ProfileController::class, 'update'])->name('myaccount.update');
+Route::put('/myaccount', [ProfileController::class, 'update'])->name('myaccount');
 Route::get('/banned', [BannedController::class, 'index'])->name('banned');

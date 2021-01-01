@@ -30,7 +30,7 @@ class DashboardController extends Controller
                     ->limit(7)
                     ->get(),
             'catatan' => Note::where('user_id', Auth::user()->id)
-                    ->where('is_finished', 0)
+                    ->latest()
                     ->get(),
         ]);
     }

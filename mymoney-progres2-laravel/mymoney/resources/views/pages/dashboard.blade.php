@@ -183,13 +183,19 @@
                         @forelse($catatan as $c)
                         <tr>
                             <th scope="row">{{$loop->iteration}}</th>
+                            @if($c->is_finished)
+                            <td style="text-decoration:line-through">{{$c->judul}}</td>
+                            @else 
                             <td>{{$c->judul}}</td>
+                            @endif
                             <td>{{$c->catatan}}</td>
                             <td>
+                                @if(!$c->is_finished)
                                 <form action="{{url('/dashboard/catatan/finish',$c->id)}}" method="post">
                                     @csrf
                                     <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check-circle"></i></button>
                                 </form>
+                                @endif
                             </td>
                         </tr>
                         @empty

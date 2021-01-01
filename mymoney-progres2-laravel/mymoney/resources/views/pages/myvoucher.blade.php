@@ -21,7 +21,7 @@
     <div class="card">
         <img src="{{url('/img/'.$mv->image)}}" class="card-img-top" alt="{{ $mv->image }}">
         <div class="card-body">
-            <p class="card-text">{{ $mv->voucher_name }} <br> <small class="text-muted">{{ $mv->kode }}</small></p>
+            <p class="card-text">{{ $mv->voucher_name }}</p>
 
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#mdl{{ $mv->id }}">
                 Scan Barcode
