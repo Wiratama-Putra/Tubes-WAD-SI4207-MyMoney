@@ -353,12 +353,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    // public function test(){
-    //     $judulTrans = "Token Listrik";
-        
-    //     $pesan = "$nmrToken";
-    //     return view('pages.success', compact(['judulTrans','pesan']));
-    // }
     public function tabungan()
     {
         return view('pages.tabungan', [
@@ -369,9 +363,52 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function transNabung(Request $request)
+    {
+        if ($request->aksi === "nabung") {
+            if(Auth::user()->balance < $request->nominal) {
+                return redirect('/dashboard/tabungan/')->with('status','Saldo Aktif Anda tidak cukup');
+                exit;
+            } else {
+                User::where('id', Auth::user()->id)
+                    ->update([
+                        'balance' => Auth::user()->balance - (int)$request->nominal,
+                        'saving_balance' => Auth::user()->saving_balance + (int)$request->nominal,
+                    ]);
+                Transaction::create([
+                    'deskripsi' => 'Nabung',
+                    'nominal' => $request->nominal,
+                    'user_id' => Auth::user()->id,
+                    'inout' => '-',
+                    'point'=> '0',
+                ]);
+                $pesan = "Berhail Menabung";
+            }
+        } elseif ($request->aksi === "tarik") {
+            if(Auth::user()->saving_balance < $request->nominal) {
+                return redirect('/dashboard/tabungan/')->with('status','Tabungan Anda tidak cukup');
+                exit;
+            } else {
+                User::where('id', Auth::user()->id)
+                    ->update([
+                        'balance' => Auth::user()->balance + (int)$request->nominal,
+                        'saving_balance' => Auth::user()->saving_balance - (int)$request->nominal,
+                    ]);
+                Transaction::create([
+                    'deskripsi' => 'Tarik Tabungan',
+                    'nominal' => $request->nominal,
+                    'user_id' => Auth::user()->id,
+                    'inout' => '-',
+                    'point'=> '0',
+                ]);
+                $pesan = "Berhail penarikan dari tabungan ke saldo aktif";
+            }
+        }
+        return redirect('/dashboard/tabungan/')->with('status',$pesan);
+    }
+
     // belum fiks
     
-
     public function belanjaApi(belanjaRequest $request)
     {
         $balance = (User::findOrFail($request->id)->only('balance'))['balance'];
@@ -400,14 +437,8 @@ class DashboardController extends Controller
                 'poin' => User::findOrFail($request->id)->point,
             ]
         ]);
-        // return response()->json([
-        //     'data' => 'berhasil',
-        //     'status' => [
-        //         'judul' => $request->judul,
-        //         'harga' => $request->harga,
-        //     ]
-        // ]);
     }
+
     public function ceksaldoApi(Request $request)
     {
         $request->validate([

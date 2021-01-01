@@ -41,6 +41,9 @@
                     <h5 class="text-dark">{{ $v->name }}</h5>
                     <div class="d-flex justify-content-between ">
                         <div style="font-size: 1em;" class="align-self-center card-text text-danger">{{ $v->point }} Point</div>
+                        @if ($v->point > Auth::user()->point)
+                            <small class="small"> {{ (Auth::user()->point -  $v->point) }} point </small>
+                        @endif
                         <a href="{{url('/dashboard/voucher/buy',$v->id)}}" class="btn btn-success">Beli</a>
                     </div>
                 </div>

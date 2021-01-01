@@ -6,15 +6,15 @@
     <h1 class="h3 mb-0 text-gray-800">Tabungan</h1>
 </div>
 
+@if (session('status'))
 <div class="row">
-    @if (session('status'))
     <div class="col-12 w-100">
-        <div class="alert alert-success">
+        <div class="alert alert-danger">
             {{ session('status') }}
         </div>
     </div>
-    @endif
 </div>
+@endif
 <div class="row">
 
     <div class="col-xl-4 col-md-6 mb-4">
@@ -44,7 +44,9 @@
                         <div class="h5 mb-0 small text-gray-800">{{ __('Tambah Tabungan') }}</div>
                     </div>
                     <div class="col-auto">
-                        <a href="" class="btn btn-success"><i class="fas fa-upload"></i></a>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#nabung">
+                            <i class="fas fa-upload"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -61,7 +63,9 @@
                             <div class="h5 mb-0 small text-gray-800">{{ __('Tarik ke saldo aktif') }}</div>
                     </div>
                     <div class="col-auto">
-                        <a href="" class="btn btn-warning"><i class="fas fa-download"></i></a>
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#tarik">
+                            <i class="fas fa-download"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -122,6 +126,69 @@
     </div>
 
 </div>
+
+{{-- Modal --}}
+
+<div class="modal fade" id="nabung" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="nabungLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{{url('/dashboard/tabungan')}}" id="form-id">
+                @csrf
+                <input type="hidden" name="aksi" value="nabung">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="nabungLabel">Yuk Nabung</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-control-label" for="saving">Jumlah Menabung<span class="small text-danger">*</span></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Rp. </span>
+                        </div>
+                        <input type="number" id="saving" class="form-control" name="nominal" placeholder="Jumlah penarikan" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Proses</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    
+<div class="modal fade" id="tarik" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="tarikLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{{url('/dashboard/tabungan')}}" id="form-id">
+                @csrf
+                <input type="hidden" name="aksi" value="tarik">
+                <div class="modal-header">
+                <h5 class="modal-title" id="tarikLabel">Penarikan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-control-label" for="saving">Jumlah Penarikan ke Saldo Aktif<span class="small text-danger">*</span></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Rp. </span>
+                        </div>
+                        <input type="number" id="saving" class="form-control" name="nominal" placeholder="Jumlah nabung" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">Proses</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+            
 @endsection
 
 @section('for-script')

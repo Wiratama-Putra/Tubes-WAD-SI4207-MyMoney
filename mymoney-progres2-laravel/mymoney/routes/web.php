@@ -45,13 +45,8 @@ Route::middleware('auth','is_user')->prefix('dashboard')->name('dashboard.')->gr
     Route::get('/myvoucher', [DashboardController::class, 'myvoucher'])->name('myvoucher');
     Route::get('/voucher', [DashboardController::class, 'voucher'])->name('shop.voucher.list');
     Route::get('/voucher/buy/{voucher}', [DashboardController::class, 'buyVoucher'])->name('shop.voucher.buy');
-    
-
-
-    // Route::get('/test', [DashboardController::class, 'test']);
     Route::get('/tabungan', [DashboardController::class, 'tabungan'])->name('tabungan.index');
-    
-    
+    Route::post('/tabungan', [DashboardController::class, 'transNabung'])->name('tabungan.index');
 });
 
 Route::middleware('auth','is_admin')->prefix('admin')->name('admin.')->group(function () {

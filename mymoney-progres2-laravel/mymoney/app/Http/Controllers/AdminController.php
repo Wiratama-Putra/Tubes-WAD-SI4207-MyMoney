@@ -18,11 +18,19 @@ class AdminController extends Controller
 
     public function index()
     {
-        $uc = User::count();
-        $widget = [
-            'usrcount' => $uc,
-        ];
-        return view('admin.index', compact('widget'));
+        return view('admin.index', [
+            'vc' => Voucher::count(),
+            'uc' => User::where('level', 'user')
+                        ->count(),
+            'uactive' => User::where('level', 'user')
+                        ->where('is_active', '1')->count(),
+            'unactive' => User::where('level', 'user')
+                        ->where('is_active', '0')->count(),
+            'users' => User::where('level', 'user')
+                        ->orderBy('created_at', 'desc')
+                        ->limit(7)
+                        ->get(),
+        ]);
     }
     
     public function voucher()
