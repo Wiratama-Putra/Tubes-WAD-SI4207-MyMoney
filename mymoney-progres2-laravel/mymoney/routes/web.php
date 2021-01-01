@@ -43,7 +43,7 @@ Route::middleware('auth','is_user')->prefix('dashboard')->name('dashboard.')->gr
     Route::post('/catatan/finish/{note}', [DashboardController::class, 'finishedCtt'])->name('catatan.fnish');
     Route::get('/catatan/del/{note}', [DashboardController::class, 'delCtt'])->name('catatan.del');
     Route::get('/myvoucher', [DashboardController::class, 'myvoucher'])->name('myvoucher');
-    Route::get('/voucher', [DashboardController::class, 'voucher'])->name('shop.voucher');
+    Route::get('/voucher', [DashboardController::class, 'voucher'])->name('shop.voucher.list');
     Route::get('/voucher/buy/{voucher}', [DashboardController::class, 'buyVoucher'])->name('shop.voucher.buy');
     
 

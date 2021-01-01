@@ -40,15 +40,13 @@
                 <div class="card-body">
                     <h5 class="text-dark">{{ $v->name }}</h5>
                     <div class="d-flex justify-content-between ">
-                        <div style="font-size: 1em;" class="align-self-center card-text text-danger">{{ $v->point }} </div>
+                        <div style="font-size: 1em;" class="align-self-center card-text text-danger">{{ $v->point }} Point</div>
                         <a href="{{url('/dashboard/voucher/buy',$v->id)}}" class="btn btn-success">Beli</a>
                     </div>
                 </div>
             </div>
             @empty
-            <tr>
-                <td colspan="100" class="text-center">Voucher lagi kosong, sabar ya</td>
-            </tr>
+                <label>Voucher lagi kosong, sabar ya</label>
             @endforelse
         </div>
     </div>

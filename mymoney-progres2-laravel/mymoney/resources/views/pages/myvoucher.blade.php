@@ -1,61 +1,62 @@
 @extends('layouts.template')
-@section('title', 'MyVoucher')
+@section('title', 'Voucher')
 @section('content')
 
-<!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Voucher Saya</h1>
+    <h1 class="h3 mb-0 text-gray-800">Voucher Saya</h1> 
 </div>
 
+@if (session('pesan'))
 <div class="row">
-    
-    <div class="col-xl-12 col-lg-12">
-        <div class="card shadow">
-    
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Voucher</h6>
-            </div>
-            
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Nama Voucher</th>
-                                <th>Nominal</th>
-                                <th>Point</th>
-                                <th>Tanggal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($myvoucher as $mv)
-                            <tr>
-                                <td>{{$mv->deskripsi}}</td>
-                                <td> @currency($mv->nominal)</td>
-                                <td>{{$mv->point}}</td>
-                                <td>{{$mv->created_at}}</td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="100" class="text-center">Data Kosong</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="col-12 w-100">
+        <div class="alert alert-danger">
+            {{ session('pesan') }}
         </div>
     </div>
 </div>
-@endsection
-@section('for-script')
-<script>
-    // Call the dataTables jQuery plugin
-    $(document).ready(function() {
-        $('#dataTable').dataTable( {
-            "order": [],
-        } );
-    });
-</script>
+@endif
+
+<div class="card-columns">
+    @forelse($myvouchers as $mv)
+    <div class="card">
+        <img src="{{url('/img/'.$mv->image)}}" class="card-img-top" alt="{{ $mv->image }}">
+        <div class="card-body">
+            <p class="card-text">{{ $mv->voucher_name }} <br> <small class="text-muted">{{ $mv->kode }}</small></p>
+
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#mdl{{ $mv->id }}">
+                Scan Barcode
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="mdl{{$mv->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="mdl{{$mv->id}}Label">{{ $mv->voucher_name }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-center">
+                            <?php 
+                            echo DNS2D::getBarcodeHTML($mv->kode, 'QRCODE');
+                            ?>
+                        </div>
+                        <div class="text-center">
+                            <small class="text-muted">{{ $mv->kode }}</small>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    @empty
+        <label>Belum ada voucher nih, yuk tukarkan poin mu!!</label>
+    @endforelse
+</div>
+
 @endsection

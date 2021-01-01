@@ -11,6 +11,7 @@ use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
+use File;
 
 class DashboardController extends Controller
 {
@@ -296,15 +297,6 @@ class DashboardController extends Controller
         return back();
     }
 
-    public function myvoucher()
-    {
-        return view('pages.myvoucher', [
-            'myvoucher' => MyVoucher::where('user_id', Auth::user()->id)
-                    ->orderBy('created_at', 'desc')
-                    ->get(),
-        ]);
-    }
-
     public function voucher()
     {
         return view('pages.voucher', [
@@ -320,40 +312,45 @@ class DashboardController extends Controller
         }
 
         Transaction::create([
-            'deskripsi' => 'Pulsa-' . $request->provider . '-' . $request->nomorhp,
-            'nominal' => (int)$request->nominal,
-            'inout' => 'out',
-            'point'=> '+ '.$this->point,
+            'deskripsi' => 'Beli Voucher',
+            'nominal' => 0,
+            'inout' => '-',
+            'point'=> '- '.$voucher->point,
             'user_id' => Auth::user()->id,
         ]);
 
-        if (Auth::user()->saving_before_trans) {
-            User::where('id', Auth::user()->id)->update([
-                'balance' => Auth::user()->balance - (int)$request->nominal - (int)$request->saving,
-                'point' => Auth::user()->point + $this->point,
-                'spending' => Auth::user()->spending + (int)$request->nominal,
-                'saving_balance' => Auth::user()->saving_balance + (int)$request->saving
-            ]);
-            Transaction::create([
-                'deskripsi' => 'Nabung',
-                'nominal' => (int)$request->saving,
-                'inout' => 'in',
-                'point'=> '0',
-                'user_id' => Auth::user()->id,
-            ]);
-        } else {
-            User::where('id', Auth::user()->id)->update([
-                'balance' => Auth::user()->balance - (int)$request->nominal,
-                'point' => Auth::user()->point + $this->point,
-                'spending' => Auth::user()->spending + (int)$request->nominal
-            ]);
-        }
-        $judulTrans = "Pulsa";
-        $pesan = "Pembelian Pulsa 
-                $request->provider - $request->nomorhp 
-                Sebesar Rp. ".number_format($request->nominal, 0, ',', '.').
-                " Telah berhasil. \nSaldo Total anda Rp. ".number_format(Auth::user()->balance, 0, ',', '.');
+        User::where('id', Auth::user()->id)->update([
+            'point' => Auth::user()->point - $voucher->point,
+        ]);
+        
+        $skrg = mt_rand(10000, 99999);
+        $kodeencrpt = crypt($skrg,"mymoneyoke");
+        
+        $gambar = time().$voucher->image;
+        MyVoucher::create([
+            'user_id' => Auth::user()->id,
+            'voucher_id' => $voucher->id,
+            'voucher_name' => $voucher->name,
+            'kode' => $kodeencrpt,
+            'image' => $gambar,
+        ]);
+        $pathlama = public_path().'/img/'.$voucher->image;
+        $pathbaru = public_path().'/img/'.$gambar;
+        File::copy($pathlama, $pathbaru);
+        $judulTrans = "Voucher";
+        $pesan = "Pembelian Voucher dengan menukar Point berhasil.
+                    <b> $voucher->point </b> Point ditukar dengan Voucher <b>$voucher->name </b>
+                    Sisa Point anda ".Auth::user()->point;
         return view('pages.success', compact(['judulTrans','pesan']));
+    }
+
+    public function myvoucher()
+    {
+        return view('pages.myvoucher', [
+            'myvouchers' => MyVoucher::where('user_id', Auth::user()->id)
+                            ->latest()
+                            ->get(),
+        ]);
     }
 
     // public function test(){

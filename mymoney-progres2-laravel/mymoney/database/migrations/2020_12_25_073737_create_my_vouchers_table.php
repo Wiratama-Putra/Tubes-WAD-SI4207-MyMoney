@@ -15,13 +15,13 @@ class CreateMyVouchersTable extends Migration
     {
         Schema::create('my_vouchers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('voucher_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('voucher_id')->nullable();
             $table->string('voucher_name');
             $table->string('kode');
             $table->string('image')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('voucher_id')->references('id')->on('vouchers');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('voucher_id')->references('id')->on('vouchers')->onDelete('set null');
             $table->timestamps();
         });
     }

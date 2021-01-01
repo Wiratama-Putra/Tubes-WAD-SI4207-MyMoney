@@ -75,7 +75,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item {{ Nav::isRoute('dashboard.shop.pulsa') }}" href="{{route('dashboard.shop.pulsa')}}">Pulsa</a>
                     <a class="collapse-item {{ Nav::isRoute('dashboard.shop.listrik') }}" href="{{route('dashboard.shop.listrik')}}">Listrik</a>
-                    <a class="collapse-item {{ Nav::isRoute('dashboard.shop.voucher') }}" href="{{route('dashboard.shop.voucher')}}">Voucher</a>
+                    <a class="collapse-item {{ Nav::isRoute('dashboard.shop.voucher.*') }}" href="{{route('dashboard.shop.voucher.list')}}">Voucher</a>
                 </div>
             </div>
         </li>
