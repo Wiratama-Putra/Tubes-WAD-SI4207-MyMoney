@@ -20,8 +20,14 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->integer('balance')->default(0);
             $table->integer('point')->default(0);
-
+            $table->integer('saving_balance')->default(0);
+            $table->integer('spending_target')->default(0);
+            $table->integer('spending')->default(0);
+            $table->integer('saving_before_trans')->default(1);
+            $table->string('level')->default('user');
             $table->string('password');
+            $table->integer('is_active')->default(1);
+            $table->string('photo')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

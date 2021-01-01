@@ -17,7 +17,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{url('tampilan/css/style.css')}}">
-    <title>Hello, world!</title>
+    <title>My Money</title>
 </head>
 
 <body>
@@ -33,14 +33,15 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-
-                    <a class="nav-link mr-5" href="{{route('dashboard.topup')}}">Topup</a>
-                    <a class="nav-link mr-5" href="{{route('dashboard.transfer')}}">Transfer</a>
-                    <a class="nav-link mr-5" href="{{route('dashboard.riwayat')}}">Riwayat</a>
+                @auth
+                    <a class="nav-link mr-5" href="{{route('dashboard.saldo.topup')}}">Topup</a>
+                    <a class="nav-link mr-5" href="{{route('dashboard.saldo.transfer')}}">Transfer</a>
+                    <a class="nav-link mr-5" href="{{route('dashboard.saldo.riwayat')}}">Riwayat</a>
+                    <a style="font-weight: 200;" class="px-4 mr-4 login btn btn-md btn-primary" href="{{route('dashboard.index')}}">Dashboard</a>
+                @else
                     <a style="font-weight: 200;" class="px-4 mr-4 login btn btn-md btn-primary" href="{{url('login')}}">Login</a>
                     <a style="font-weight: 200;" class="px-4 btn register btn-md btn-outline-primary" href="{{url('register')}}">Register</a>
-
-
+                @endauth
                 </div>
             </div>
         </div>
@@ -59,7 +60,7 @@
 
 
                         </div>
-                        <a style="font-weight: 200;position: relative;" class="px-4 mr-4 login mt-5 btn btn-md btn-primary" href="#">Mulai Transaksi</a>
+                        <a style="font-weight: 200;position: relative;" class="px-4 mr-4 login mt-5 btn btn-md btn-primary" href="{{url('login')}}">Mulai Transaksi</a>
                         <p class="mt-5"> <b>|</b> Kalau ada yang praktis, kenapa harus ribet?</p>
                     </div>
                 </div>
@@ -98,7 +99,7 @@
             <hr class="w-100">
             <div class="footer mb-5 d-flex align-items-center justify-content-center">
                 <img src="img/logo.svg" width="100px" class="img-fluid" alt="">
-                <p class="d-flex">Copyright Mymoney 2020</p>
+                <p class="d-flex">Copyright &copy; Mymoney 2020</p>
             </div>
         </div>
     </footer>

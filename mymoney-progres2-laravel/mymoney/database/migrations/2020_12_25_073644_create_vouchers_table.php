@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsFinishedTable extends Migration
+class CreateVouchersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddIsFinishedTable extends Migration
      */
     public function up()
     {
-        Schema::table('notes', function (Blueprint $table) {
-            $table->string('is_finished')->default(0);
+        Schema::create('vouchers', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->integer('point');
+            $table->string('image')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class AddIsFinishedTable extends Migration
      */
     public function down()
     {
-        Schema::table('notes', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('vouchers');
     }
 }
