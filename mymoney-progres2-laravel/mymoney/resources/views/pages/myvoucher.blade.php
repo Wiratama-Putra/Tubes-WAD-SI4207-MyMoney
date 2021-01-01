@@ -39,12 +39,11 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex justify-content-center">
-                            <?php 
-                            echo DNS2D::getBarcodeHTML($mv->kode, 'QRCODE');
-                            ?>
+                            <img src="{{asset('img/barcode.png')}}" alt="barcode" class="img-thumbnail" width="300px">
                         </div>
+                        <hr>
                         <div class="text-center">
-                            <small class="text-muted">{{ $mv->kode }}</small>
+                            <h4>{{ $mv->kode }}</h4>
                         </div>
                     </div>
                 </div>
