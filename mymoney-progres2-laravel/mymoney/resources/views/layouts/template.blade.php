@@ -11,11 +11,7 @@
     <link href="{{ asset('tampilan/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <!-- Styles -->
-    @if(Auth::user()->level === "user")
     <link href="{{ asset('tampilan/css/sb-admin-2.css') }}" rel="stylesheet">
-    @else
-    <link href="{{ asset('tampilan/css/sb-admin-2.min.css') }}" rel="stylesheet">
-    @endif
 
     <link href="{{ asset('tampilan/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 </head>
@@ -159,6 +155,7 @@
                     @if(Auth::user()->level === "user")
                     <li class="nav-item mx-1">
                         <div class="nav-link">
+                            {{-- lihat di app/provider/AppServiceProvider.php --}}
                         <span>  @currency(Auth::user()->balance) &nbsp;&nbsp; </span>    
                         <i class="fas fa-money-bill-wave"></i> 
                         </div>

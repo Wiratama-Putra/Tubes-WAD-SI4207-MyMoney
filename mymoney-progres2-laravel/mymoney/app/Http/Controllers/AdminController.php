@@ -19,9 +19,9 @@ class AdminController extends Controller
     public function index()
     {
         return view('admin.index', [
-            'vc' => Voucher::count(),
+            'vc' => Voucher::count(),  // Select count(id) from voucher;
             'uc' => User::where('level', 'user')
-                        ->count(),
+                        ->count(),  // 
             'uactive' => User::where('level', 'user')
                         ->where('is_active', '1')->count(),
             'unactive' => User::where('level', 'user')
@@ -111,7 +111,7 @@ class AdminController extends Controller
     public function statusChngUser(User $user)
     {
         User::where('id', $user->id)->update([
-            'is_active' => !$user->is_active
+            'is_active' => !$user->is_active  // 1 atau 0  !1 = 0  !0 = 1
         ]);
         return back()->with('pesan', 'Status akun berhasil diubah');
     }

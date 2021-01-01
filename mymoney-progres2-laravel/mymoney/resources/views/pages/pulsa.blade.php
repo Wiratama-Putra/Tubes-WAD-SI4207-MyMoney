@@ -62,7 +62,7 @@
                         <label for="forJml">Jumlah <i>(5000 / 10000 / 20000 / etc)</i></label>
                         <input type="number" class="form-control" id="forJml" name="nominal" required>
                     </div>
-                    @if(Auth::user()->saving_before_trans)
+                    @if(Auth::user()->saving_before_trans)  {{--! 1 dan 0--}}
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
                         Beli
                     </button>

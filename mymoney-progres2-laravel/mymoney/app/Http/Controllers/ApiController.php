@@ -13,10 +13,12 @@ class ApiController extends Controller
     {
         $balance = (User::findOrFail($request->id)->only('balance'))['balance'];
         $point = (User::findOrFail($request->id)->only('point'))['point'];
+        $spending = (User::findOrFail($request->id)->only('spending'))['spending'];
 
         User::where('id', $request->id)->update([
             'balance' => $balance - (int)$request->nominal,
-            'point' => $point + 10
+            'point' => $point + 10,
+            'spending' => $spending + $request->nominal,
         ]);
         Transaction::create([
             'deskripsi' => 'BelanjaAPI-' . $request->bank . '-' . $request->vendor,
@@ -35,6 +37,7 @@ class ApiController extends Controller
             'data_pengguna' => [
                 'id' => $request->id,
                 'nama' => User::findOrFail($request->id)->name,
+                'email' => User::findOrFail($request->id)->email,
                 'saldo' => User::findOrFail($request->id)->balance,
                 'poin' => User::findOrFail($request->id)->point,
             ]
@@ -50,6 +53,7 @@ class ApiController extends Controller
         return response()->json([
             'id' => $user->id,
             'name' => $user->name,
+            'email' => $user->email,
             'saldo' => $user->balance,
             'poin' => $user->point,
         ]);
