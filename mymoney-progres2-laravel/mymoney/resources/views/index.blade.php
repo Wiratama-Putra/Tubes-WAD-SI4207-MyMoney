@@ -14,9 +14,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{url('tampilan/css/style.css')}}">
     <title>My Money</title>
 </head>
 
@@ -32,17 +29,29 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
+                <ul class="navbar-nav">
                 @auth
-                    <a class="nav-link mr-5" href="{{route('dashboard.saldo.topup')}}">Topup</a>
-                    <a class="nav-link mr-5" href="{{route('dashboard.saldo.transfer')}}">Transfer</a>
-                    <a class="nav-link mr-5" href="{{route('dashboard.saldo.riwayat')}}">Riwayat</a>
-                    <a style="font-weight: 200;" class="px-4 mr-4 login btn btn-md btn-primary" href="{{route('dashboard.index')}}">Dashboard</a>
-                @else
-                    <a style="font-weight: 200;" class="px-4 mr-4 login btn btn-md btn-primary" href="{{url('login')}}">Login</a>
-                    <a style="font-weight: 200;" class="px-4 btn register btn-md btn-outline-primary" href="{{url('register')}}">Register</a>
+                  <li class="nav-item">
+                      <a class="nav-link mr-5" href="{{route('dashboard.saldo.topup')}}">Topup</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link mr-5" href="{{route('dashboard.saldo.transfer')}}">Transfer</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link mr-5" href="{{route('dashboard.saldo.riwayat')}}">Riwayat</a>
+                  </li>
+                  <li class="nav-item">
+                      <a style="font-weight: 200;" class="px-4 mr-4 login btn btn-md btn-primary" href="{{route('dashboard.index')}}">Dashboard</a>
+                  </li>
+                  @else
+                  <li class="nav-item">
+                      <a style="font-weight: 200;" class="px-4 mr-4 btn btn-md btn-primary" href="{{url('login')}}"> Login</a>
+                  </li>
+                  <li class="nav-item">
+                      <a style="font-weight: 200;" class="px-4 btn btn-md btn-outline-primary" href="{{url('register')}}">Register</a>
+                  </li>
                 @endauth
-                </div>
+              </ul>
             </div>
         </div>
     </nav>
@@ -104,17 +113,8 @@
         </div>
     </footer>
 
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-
-    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-    -->
 </body>
 
 </html>
