@@ -35,6 +35,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="text-center">
+                                <h5 class="font-weight-bold">ID Anda : {{  Auth::user()->id }}</h5>
                                 <h5 class="font-weight-bold">{{  Auth::user()->name }}</h5>
                                 <p>Level : {{  Auth::user()->level }}<br/>
                                 {{  Auth::user()->email }}</p>
